@@ -1,0 +1,31 @@
+//  fill in or overwrite the default for the variables 
+
+ibmcloud_api_key = 
+
+// Region in which to provision vpc.  This is ignored if the vpc already exists.
+region =  "us-south"
+
+// Zone in which to provision vsi.  This must be in the same region as the vsi
+zone =  "us-south-1"
+
+// Name deployed resources will be prefixed with
+basename = 
+
+// This ssh key must already be available in the region you are deploying to.
+// It is used for access to the vsi.
+ssh_key_id =
+
+// The RFC 4632 CIDR to use for the Wireguard network. This should not conflict with existing subnets.
+wg_cidr = "10.0.200.0/24" 
+
+// Server configuration information for wireguard
+// Only private key is required.  For convenience, you can also provide the public key, 
+// so the full client configuration will be in the output.  But, be careful about exposing the pair.
+// Alternatively, add the public key to the configuration output.
+wg_server_config = { "publicKey" : "<optional>", "privateKey" : "something-like-Z4iSi04lW5O239asdfkasdlfk903Uo="}
+
+// List of client configuration information for wireguard; at least one client configuration is required
+// Only public key is required.  For convenience, you can also provide the private key, 
+// so the full client configuration will be in the output.  But, be careful about exposing the pair.
+// Alternatively, add the private key to the configuration output.
+wg_client_configs = [{ "publicKey" : "something-like-uEQh9f5W6gE23948234982nLvzeGvyMQXw8Oun0=" , "privateKey" : "<optional>"}]
