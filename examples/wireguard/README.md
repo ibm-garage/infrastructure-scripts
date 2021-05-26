@@ -42,7 +42,7 @@ We recommend using `terraform.tfvars` to provide values to the input parameters 
 | ssh_key_id | The id of the ssh key that you will use to provision (access) the VSIs | string | N/A | yes |
 | wg_cidr | The RFC 4632 CIDR to use for the WireGuard network. | string | "10.0.200.0/24" | yes |
 | wg_server_config | The server config for WireGuard. To work properly the private key must be provided | object({ publicKey = string, privateKey = string }) | { publicKey = "", privateKey = "generated via wg command" } | yes |
-| wg_client_configs | The list of client configurations for WireGuard. To work properly the public keys must be provided | list(object({ publicKey = string, privateKey = string })) | [{ publicKey = "generated via wg command", privateKey = "" }] | no |
+| wg_clients | The list of client configurations for WireGuard. To work properly the public keys must be provided | list(object({ publicKey = string, privateKey = string })) | [{ publicKey = "generated via wg command", privateKey = "" }] | no |
 
 ### Output Variables
 

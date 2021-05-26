@@ -23,7 +23,7 @@ variable "wg_cidr" {
   description = "The RFC 4632 CIDR to use for the Wireguard network. This should not conflict with existing subnets."
 }
 
-variable "wg_client_configs" {
+variable "wg_clients" {
   type = list(object({
     publicKey  = string
     privateKey = string

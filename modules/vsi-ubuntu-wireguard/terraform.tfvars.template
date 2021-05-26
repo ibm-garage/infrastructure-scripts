@@ -8,12 +8,26 @@ region =  "us-south"
 // Zone in which to provision vsi.  This must be in the same region as the vsi
 zone =  "us-south-1"
 
+// ID of VPC into which to provision the VSI.  A subnet will also be created.
+vpc_id = 
+
+// ID of Resource Group in which to provision the wireguard server
+resource_group_id = 
+
 // Name deployed resources will be prefixed with
 basename = 
+
+// seconds to wait for newly provisioned server to init
+// default = 1
+// init_timeout = 
 
 // This ssh key must already be available in the region you are deploying to.
 // It is used for access to the vsi.
 ssh_key_id =
+
+// Array of cidrs in the VPC that you want to connect to through the vpn.  For example, you can add the subnet ranges for a ROKS or IKS cluster
+//  default = []
+// cidrs = 
 
 // The RFC 4632 CIDR to use for the Wireguard network. This should not conflict with existing subnets.
 wg_cidr = "10.0.200.0/24" 
