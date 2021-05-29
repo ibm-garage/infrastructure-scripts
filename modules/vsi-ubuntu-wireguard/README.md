@@ -1,18 +1,25 @@
 # Install and Configure Wireguard
 
-## Introduction
-This module deploys a VSI into a VPC environment pre-configured with Wireguard and any configuration for peers provided. Once the floating IP is assigned this can be used to tunnel into your VPC environment from your laptop or other machine.
+## Use Case
+
+In a VPC, you have disabled public service endpoints on a service or, for security/compliance reasons, you have only private IPs on your VSIs (no floating ips).  You need some way to connect to your servers and services.
+
+## How it helps 
+
+This terraform module will stand up an ubuntu VSI with wireguard running.  As parameters to the terraform template, you provide a public/private key for the server and one or more public/private keys for your team.  Your team installs the wireguard client (for mac, it's in the app store), paste the client config you give them into the client and activate the tunnel.  Once the tunnel is activated, they can use the VPN tunnel to access private endpoints.
+
 
 ### Prerequisites
 
 Prior to using this module, ensure you have at least the following (refer to Input Variables for additional parameters for the IBM Cloud VPC environment):
 
-* Terraform 0.14 or higher
-* IBM API Key
-* An ssh key object already available in the IBM Cloud in the region where the VSI will be provisioned.  
+* Terraform 0.14 or higher -  see installation instructions in the reference section:  [Terraform installation](#terraform-installation)
+* IBM API Key - refer to  [IBM Cloud Doc: Setting up an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey#create_user_key)
+* An ssh key object already available in the IBM Cloud in the region where the VSI will be provisioned - refer to [IBM Cloud Doc: Setting up an SSH key](https://cloud.ibm.com/docs/vpc?topic=vpc-ssh-keys).  Once you have the key, you will need to upload it to IBM Cloud.  You can do this in the UI by navigating to `VPC Infrastructure->SSH Keys` and selecting `Create` or, if you have the [IBM Cloud CLI installed](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with the infrastructure plugin, you can use the command `ibmcloud is key-create` to upload your key.  To get the ID to pass into the terraform, use the `UUID` field from the UI, or from the CLI, use the `ID` value for your key, returned from the command `ibmcloud is keys`.
 * A VPC into which a subnet and VSI will be provisioned.
-* Wireguard client installed on your desktop/laptop to connect to the deployed VSI
-* Wireguard tools to generate peer configs
+* WireGuard client installed on your workstation (desktop/laptop) - refer to [WireGuard Documentation: installation](https://www.WireGuard.com/install/)
+* Wireguard-tools installed.  This is used to generate public/private keys pairs On [Wireguard Documentation: installation](https://www.WireGuard.com/install/) page, search for `wireguard-tools` for your os.
+* A public/private key pair for the wireguard server, and public/private key pairs for at least one client configuration.  To create a pair, use the `wireguard-tools` and run the command `wg genkey | tee privatekey | wg pubkey > publickey`.  The keys can then be copied from the generated privatekey and publickey files.  Alternatively, you can use the helper script by running `./createkeys.sh -n <numClients>` and this will output the variables `wg_server_config` and `wg_clients` to stdout for you to paste into the `terraform.tfvars` or `variables.tf` file.  If you don't want the server public key or client private keys exposed in the terraform state or output, then remove these from the variables and save them elsewhere to be added to the client configurations manually, later.
 
 
 ### Input Variables
@@ -70,5 +77,5 @@ terraform apply
 
 After you run the script, you should:
 
-* Copy [and optionally complete] the wireguard config(s) that are output into your wireguard client(s)
+* Copy (and, add the server public key and client private key to the configuration file if you excluded them from the variables) the wireguard config(s) that are output into your wireguard client(s)
 * Activate the tunnel in your wireguard client and test connectivity, note the deployment and provisioning can take a few minutes to complete after the apply has completed

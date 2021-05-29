@@ -24,7 +24,7 @@ We will verify that once the WireGuard tunnel is activated,  the web server on t
 * An ssh key object already available in the IBM Cloud in the region where the VSI will be provisioned - refer to [IBM Cloud Doc: Setting up an SSH key](https://cloud.ibm.com/docs/vpc?topic=vpc-ssh-keys).  Once you have the key, you will need to upload it to IBM Cloud.  You can do this in the UI by navigating to `VPC Infrastructure->SSH Keys` and selecting `Create` or, if you have the [IBM Cloud CLI installed](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with the infrastructure plugin, you can use the command `ibmcloud is key-create` to upload your key.  To get the ID to pass into the terraform, use the `UUID` field from the UI, or from the CLI, use the `ID` value for your key, returned from the command `ibmcloud is keys`.
 * WireGuard client installed on your workstation (desktop/laptop) - refer to [WireGuard Documentation: installation](https://www.WireGuard.com/install/)
 * Wireguard-tools installed.  This is used to generate public/private keys pairs On [Wireguard Documentation: installation](https://www.WireGuard.com/install/) page, search for `wireguard-tools` for your os.
-* A public/private key pair for the wireguard server, and public/private key pairs for at least one client configuration.  To create a pair, use the `wireguard-tools` and run the command `wg genkey | tee privatekey | wg pubkey > publickey`.  The keys can then be copied from the generated privatekey and publickey files.
+* A public/private key pair for the wireguard server, and public/private key pairs for at least one client configuration.  To create a pair, use the `wireguard-tools` and run the command `wg genkey | tee privatekey | wg pubkey > publickey`.  The keys can then be copied from the generated privatekey and publickey files.  Alternatively, you can use the helper script by running `../../modules/vsi-ubuntu-wireguard/createkeys.sh -n <numClients>` and this will output the variables `wg_server_config` and `wg_clients` to stdout for you to paste into the `terraform.tfvars` or `variables.tf` file.  If you don't want the server public key or client private keys exposed in the terraform state or output, then remove these from the variables and save them elsewhere to be added to the client configurations manually, later.
 
 
 ### Input Variables
@@ -68,11 +68,7 @@ Tested with Terraform v0.14
 
 ## Running the configuration
 
-First, use WireGuard command to generate at least two sets of WireGuard keys,
-  * one for the server - the VSI instance, and
-  * one for each of the WireGuard clients laptops/workstations
-
-Then run:
+Run:
 
 ```shell
 terraform init
@@ -84,7 +80,7 @@ terraform apply
 
 After you run the script, you should (you may have to wait a few minutes for all the resources to be ready):
 
-* Copy `CLIENT_CONFIGS` info from the script output into a configuration file (e.g. `wg-client.conf`), complete the missing sections, and import into your WireGuard client(s)
+* Copy `CLIENT_CONFIGS` info from the script output into a configuration file (e.g. `wg-client.conf`), add the server public key and client private key to the configuration file if you excluded them from the variables.  Import client configuration into each WireGuard client.
 * Activate the tunnel by pushing the activate button in the WireGuard client
 * Test connectivity to the Ubuntu VSI with accessing the http endpoint `http://<ubuntu_vsi_private_ip>`, either from a browser on your workstation / WireGuard client, or use `curl`. For example:
 
