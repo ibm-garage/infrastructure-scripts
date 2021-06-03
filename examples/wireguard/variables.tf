@@ -20,6 +20,7 @@ variable "ssh_key_id" {
 
 variable "wg_cidr" {
   type        = string
+  default     = "10.0.200.0/24"
   description = "The RFC 4632 CIDR to use for the Wireguard network. This should not conflict with existing subnets."
 }
 
