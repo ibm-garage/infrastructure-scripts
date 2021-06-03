@@ -73,6 +73,7 @@ module "wg_vsi" {
   vpc_id            = ibm_is_vpc.vpc.id
   ssh_key_id        = var.ssh_key_id
   cidrs             = [data.ibm_is_subnet.subnet.ipv4_cidr_block]
+  wg_cidr           = var.wg_cidr
   wg_clients        = var.wg_clients
   wg_server_config  = var.wg_server_config
 }
