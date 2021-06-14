@@ -1,0 +1,31 @@
+//  fill in or overwrite the default for the variables 
+
+ibmcloud_api_key = 
+
+// Region in which to provision vpc.  This is ignored if the vpc already exists.
+region =  "us-south"
+
+// Zone in which to provision vsi.  This must be in the same region as the vsi
+zone =  "us-south-1"
+
+// Name of resource group
+resource_group_name = 
+
+// Name of VPC
+vpc_name =
+
+// Name deployed resources will be prefixed with
+basename = 
+
+// This ssh key must already be available in the region you are deploying to.
+// It is used for access to the vsi.
+ssh_key_name =
+
+// Admin password for F5 admin console
+// type = string
+f5_admin_password = 
+
+// BYOL license for F5
+// type = string
+f5_license = 
+
