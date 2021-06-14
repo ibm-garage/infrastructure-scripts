@@ -23,9 +23,9 @@
 | WG_VSI_FLOATING_IP | The floating ip of the WireGuard VSI created |
 | WG_VSI_SUBNET      | The cidr of the WireGuard subnet created |
 | CLIENT_CONFIGS | The client configuration files needed to connect to the WireGuard server. If complete public/private key pairs were provided these should be complete configs, otherwise they will need to be completed with the appropriate key pair information. |
-| f5_mgmt_subnet_id | UUID of subnet for management interface for F5 |
-| f5_internal_subnet_id | UUID of subnet for internal interface for F5 |
-| f5_external_subnet_id | UUID of subnet for external interface for F5 |
+| f5_mgmt_subnet_id | UUID of subnet for management interface for F5 BIG-IP |
+| f5_internal_subnet_id | UUID of subnet for internal interface for F5 BIG-IP |
+| f5_external_subnet_id | UUID of subnet for external interface for F5 BIG-IP |
 
 
 ### Security Considerations

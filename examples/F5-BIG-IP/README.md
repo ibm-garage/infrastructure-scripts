@@ -1,16 +1,16 @@
-# Install F5 Big-IP and Optional Wireguard on IBM Cloud
+# Install F5 BIG-IP and Optional Wireguard on IBM Cloud
 
 *This is a work-in-progress*
 
 ## Introduction
 
-This set of example Terraform scripts demonstrates how to provision a [F5 Big IP](https://cloud.ibm.com/catalog/content/ibmcloud_schematics_bigip_multinic_declared-1.0-d33f1544-e938-478a-b0dd-d883370f08d0-global).
+This set of example Terraform scripts demonstrates how to provision a [F5 BIG-IP](https://cloud.ibm.com/catalog/content/ibmcloud_schematics_bigip_multinic_declared-1.0-d33f1544-e938-478a-b0dd-d883370f08d0-global).
 
-* Automate creation of the three subnets required by F5 Big IP for each of its network interfaces
+* Automate creation of the three subnets required by F5 BIG-IP for each of its network interfaces
 * Optionally create a wireguard server for VPN access to the management console
-* Provision the F5 Big IP
+* Provision the F5 BIG-IP
 
-Note that when the F5 is provisioned, a floating-ip will be attached to the management interface in order for it to validate the BYOL license.  After the F5 has finished initializing and validating the license, you then move the floating-ip to the external interface.  Detailed instructions are provided below.
+Note that when the F5 BIG-IP is provisioned, a floating-ip will be attached to the management interface in order for it to validate the BYOL license.  After the F5 BIG-IP has finished initializing and validating the license, you then move the floating-ip to the external interface.  Detailed instructions are provided below.
 
 
 ## Prerequisites
@@ -18,8 +18,8 @@ Note that when the F5 is provisioned, a floating-ip will be attached to the mana
 * Terraform 0.14 or higher -  see installation instructions in the reference section:  [Terraform installation](#terraform-installation)
 * IBM API Key - refer to  [IBM Cloud Doc: Setting up an API key](https://cloud.ibm.com/docs/account?topic=account-userapikey#create_user_key)
 * An ssh key object already available in the IBM Cloud in the region where the VSI will be provisioned - refer to [IBM Cloud Doc: Setting up an SSH key](https://cloud.ibm.com/docs/vpc?topic=vpc-ssh-keys).  Once you have the key, you will need to upload it to IBM Cloud.  You can do this in the UI by navigating to `VPC Infrastructure->SSH Keys` and selecting `Create` or, if you have the [IBM Cloud CLI installed](https://cloud.ibm.com/docs/cli?topic=cli-getting-started) with the infrastructure plugin, you can use the command `ibmcloud is key-create` to upload your key.  
-* The VPC where you will provision the F5 Big IP.  This is typically in a network VPC with other network components.  Make sure that your network VPC uses different address prefixes from the VPC where your workload is running.  
-* A BYOL license for the F5 Big IP.
+* The VPC where you will provision the F5 BIG-IP.  This is typically in a network VPC with other network components.  Make sure that your network VPC uses different address prefixes from the VPC where your workload is running.  
+* A BYOL license for the F5 BIG-IP.
 
 *If you plan to use Wireguard to access the Management console*
 
@@ -30,7 +30,7 @@ Note that when the F5 is provisioned, a floating-ip will be attached to the mana
 
 ## Procedure
 
-You will need to run two terraform scripts.  The first is in the infrastructure folder and the second is in the F5 folder.  This is because the F5 terraform is not designed to be included as a module.
+You will need to run two terraform scripts.  The first is in the infrastructure folder and the second is in the F5-BIG-IP folder.  This is because the F5 BIG-IP terraform is not designed to be included as a module.
 
 1. Clone this repository
 1. Change directories to the `infrastructure` folder
@@ -50,9 +50,9 @@ f5_mgmt_subnet_id = "0722-1111ddd-3333-2222-9674-959e5a4eccfc"
 ```
 with the id's of your subnets.  If you chose to provision wireguard, you will also see the details of the Wireguard configuration.
 
-Now you need to provision F5.  Change directories to the F5 folder: `cd ../f5-server`.   This script will find the subnet id's created in the previous script by introspecting the terraform state in the infrastructure folder.
+Now you need to provision F5.  Change directories to the F5 folder: `cd ../F5-BIG-IP`.   This script will find the subnet id's created in the previous script by introspecting the terraform state in the infrastructure folder.
 
-1. Start in the `f5-server` folder
+1. Start in the `F5-BIG-IP` folder
 1. _IMPORTANT:_ Set the `IC_API_KEY` environment variable to your IBM Cloud API Key.  The F5 terraform scripts require this to be set in the environment.  On a mac: `export IC_API_KEY=<ibmcloud_api_key>`
 1. Copy the `terraform.tfvars.template` file to `terraform.tfvars` and fill in the variable values.  You will need an F5 BYOL license key and you should make up an admin password.
 1. Run `terraform init`
@@ -79,7 +79,7 @@ When this terraform is complete, this is what has been provisioned.
 
 Notice that the floating ip is on the management interface.  This is required for the F5 can call the license server and validate the license.
 
-You can log into the F5 Management console, by navigating to the floating ip in a browser: `https://<F5_FLOATING_MGMT_IP>` and then provide your credentials `admin:<var.f5_admin_password>` where `.var.f5_admin_password` is the variable you provided.
+You can log into the F5 BIG-IP Management console, by navigating to the floating ip in a browser: `https://<F5_FLOATING_MGMT_IP>` and then provide your credentials `admin:<var.f5_admin_password>` where `.var.f5_admin_password` is the variable you provided.
 
 Wait for the server to be in a ready state.  It may take a while for it to complete it's setup and validate the license.
 
@@ -103,7 +103,7 @@ The following diagram shows the current setup and potential network flows.  The 
 
 ### Future Considerations
 
-For HA, the F5 server should be replicated across three zones, with the GLobal LB balancing across the three.
+For HA, the F5 BIG-IP server should be replicated across three zones, with the Global LB balancing across the three.
 
 The Security Groups and Network ACLs should be further hardened to permit only the desired traffic.
 
