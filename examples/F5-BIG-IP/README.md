@@ -77,11 +77,11 @@ When this terraform is complete, this is what has been provisioned.
 
 ![F5 Provisioned](images/f5-1.png)
 
-Notice that the floating ip is on the management interface.  This is required for the F5 can call the license server and validate the license.
+Notice that the floating ip is on the management interface.  This is required for the F5 to call the license server and validate the license.
 
 You can log into the F5 BIG-IP Management console, by navigating to the floating ip in a browser: `https://<F5_FLOATING_MGMT_IP>` and then provide your credentials `admin:<var.f5_admin_password>` where `.var.f5_admin_password` is the variable you provided.
 
-Wait for the server to be in a ready state.  It may take a while for it to complete it's setup and validate the license.
+Wait for the server to be in a ready state.  It may take a while for it to complete its setup and validate the license.
 
 Once F5 is up, you need to complete the setup by moving the floating_ip to the external interface so that it can receive internet traffic and protect your web application.
 
