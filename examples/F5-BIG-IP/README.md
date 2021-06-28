@@ -94,7 +94,7 @@ Substitute the uuid into the `COMMAND_FLOATING_IP_MOVE` output from the terrafor
 
 `ibmcloud is floating-ip-update r014-123456-aaaa-bbbb-a21e-1234567890 --nic-id 0722-395faaaa-2222-54cc-5555-333e225f1234"`
 
-Now you can configure Wireguard for Layer 7 protection of your web application.  You will need to use Wireguard to connect to the management console, or you can use another VPN, bastion server, Direct Link or other private connectivity option.
+Now you can configure F5 BIG-IP for Layer 7 protection of your web application.  You will need to use Wireguard to connect to the management console, or you can use another VPN, bastion server, Direct Link or other private connectivity option.
 
 The following diagram shows the current setup and potential network flows.  The web application could be on RedHat Openshift Kubernetes Services (ROKS) as shown, or hosted on Virtual Server Instances (VSIs) or any combination.
 
