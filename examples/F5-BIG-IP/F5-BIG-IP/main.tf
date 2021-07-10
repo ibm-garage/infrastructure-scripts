@@ -25,6 +25,11 @@ module "f5" {
   tmos_admin_password          = var.f5_admin_password
   bigip_management_floating_ip = true
 
+  tmos_image_name     = var.tmos_image_name
+  do_declaration_url  = var.do_declaration_url
+  as3_declaration_url = var.as3_declaration_url
+  ts_declaration_url  = var.ts_declaration_url
+
   management_subnet_id = data.terraform_remote_state.infra.outputs.f5_mgmt_subnet_id
   internal_subnet_id   = data.terraform_remote_state.infra.outputs.f5_internal_subnet_id
   external_subnet_id   = data.terraform_remote_state.infra.outputs.f5_external_subnet_id
