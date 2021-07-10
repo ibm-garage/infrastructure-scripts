@@ -12,6 +12,10 @@
 | resource_group_name | The name of the resource group into which to provision all resources in this script | string | N/A | yes |
 | ssh_key_name | The name of ssh key that you will use to provision (access) the VSIs | string | N/A | yes |
 | provision_wireguard | Set to true if you would like to provision Wireguard | boolean | true | no |
+| tmos_image_name | The image to be used when provisioning the F5 BIG-IP instance | string | "f5-bigip-16-0-1-1-0-0-6-all-1slot-1" | no |
+| do_declaration_url | URL to fetch the f5-declarative-onboarding declaration | string | "" | no |
+| as3_declaration_url | URL to fetch the f5-appsvcs-extension declaration | string | "" | no |
+| ts_declaration_url | URL to fetch the f5-telemetry-streaming declaration | string | "" | no |
 | f5_admin_password | Admin password for F5 | string | N/A | yes |
 | f5_license | BYOL license key | N/A | yes |
 
