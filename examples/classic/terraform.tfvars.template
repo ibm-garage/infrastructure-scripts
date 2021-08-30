@@ -1,0 +1,17 @@
+//  fill in or overwrite the default for the variables
+
+// optional
+ibmcloud_api_key = "dummy"
+
+// must provide for classic infrastructure provisioning
+iaas_classic_username =
+iaas_classic_api_key =
+
+//must have for this VSI provisioning sample
+domain =
+hostname =
+// defaults to us-south
+region =  "us-south"
+// Zone in which to provision vsi.  This must be in the same region as the vsi
+zone =  "us-south-1"
+ssh_key = { "label" : "key-name", "public_key" : "something-like-ssh-rsa-xxxx"}
