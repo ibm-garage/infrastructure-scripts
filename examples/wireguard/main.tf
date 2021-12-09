@@ -116,7 +116,7 @@ module "vsi_webserver" {
     subnet               = module.subnet_webserver.subnet_id
     interface_name       = "${var.basename}-vsi-webserver-pi"
     primary_ipv4_address = ""
-    security_groups      = [module.security_group_webserver.security_group_id[0]]
+    security_groups      = [module.security_group_webserver.security_group_id]
   }]
   user_data = local.user_data
 }
