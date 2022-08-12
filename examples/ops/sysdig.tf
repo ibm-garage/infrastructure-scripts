@@ -18,14 +18,3 @@ resource "ibm_ob_monitoring" "config" {
   cluster     = "${var.cluster_instance_id}"
   instance_id = ibm_resource_instance.sysdig.guid
 }
-
-
-
-resource "ibm_container_bind_service" "sysdig_binding" {
-  cluster_name_id             = "${var.cluster_instance_id}"
-  service_instance_name       = ibm_resource_instance.sysdig.name
-  namespace_id                = "${var.namespace_id}"
-  resource_group_id           = data.ibm_resource_group.this.id
-  role                        = "Manager"
-
-}
